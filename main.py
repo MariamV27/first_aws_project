@@ -1,19 +1,28 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pymysql
-
+from dotenv import load_dotenv
+import os
 app = Flask(__name__)
 
+
+# Accede a las credenciales
+load_dotenv()
+db_host = os.getenv("database_ip")
+db_user = os.getenv("database_user")
+db_password = os.getenv("data_password")
+db_name = os.getenv("data_db")
+db_port = int(os.getenv("data_port"))
 # Database connection configuration
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'klsflskdjflsdkjglskjdiusdhgn86767',
-    'db': 'data_base_01',
-    'port': 3306,
+    'host': db_host,
+    'user': db_user,
+    'password': db_password,
+    'db': db_name,
+    'port': db_port,
     'charset': 'utf8mb4',
     'cursorclass': pymysql.cursors.DictCursor
 }
-
+print(DB_CONFIG)
 def get_db_connection():
     return pymysql.connect(**DB_CONFIG)
 
